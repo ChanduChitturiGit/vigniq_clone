@@ -153,18 +153,25 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-blue-50 to-white flex items-center justify-center p-4">
-      <div className="w-full max-w-4xl flex bg-white rounded-2xl shadow-2xl overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-white flex items-center justify-center p-4">
+      <div className="w-full max-w-4xl flex bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
         {/* Left Side - Hero Section */}
-        <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-amber-100 to-amber-200 items-center justify-center p-12">
-          <div className="text-center">
-            <div className="w-32 h-32 bg-white/20 rounded-lg flex items-center justify-center mb-8 mx-auto">
-              <div className="w-16 h-16 bg-white rounded flex items-center justify-center">
-                <span className="text-2xl font-bold text-amber-600">V</span>
+        <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-blue-500 to-blue-600 items-center justify-center p-12 relative overflow-hidden">
+          {/* Background decorative elements */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-10 left-10 w-20 h-20 bg-white rounded-full"></div>
+            <div className="absolute bottom-20 right-10 w-16 h-16 bg-white rounded-full"></div>
+            <div className="absolute top-1/2 left-5 w-12 h-12 bg-white rounded-full"></div>
+          </div>
+          
+          <div className="text-center relative z-10">
+            <div className="w-32 h-32 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-8 mx-auto">
+              <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center shadow-lg">
+                <span className="text-2xl font-bold bg-gradient-to-br from-blue-500 to-blue-600 bg-clip-text text-transparent">V</span>
               </div>
             </div>
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">Unlock Your Potential</h2>
-            <p className="text-gray-600 text-lg">With AI-Powered Learning</p>
+            <h2 className="text-3xl font-bold text-white mb-4">Welcome to VIGNIQ</h2>
+            <p className="text-blue-100 text-lg leading-relaxed">Your comprehensive school management platform powered by modern technology</p>
           </div>
         </div>
 
@@ -172,19 +179,19 @@ const Login: React.FC = () => {
         <div className="w-full md:w-1/2 p-8 lg:p-12">
           <div className="max-w-md mx-auto">
             <div className="text-center mb-8">
-              <div className="flex items-center justify-center gap-2 mb-4">
-                <div className="w-8 h-8 bg-blue-500 rounded flex items-center justify-center">
-                  <span className="text-white font-bold">V</span>
+              <div className="flex items-center justify-center gap-2 mb-6">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-sm">
+                  <span className="text-white font-bold text-lg">V</span>
                 </div>
-                <span className="text-2xl font-bold text-gray-800">VIGNIQ</span>
+                <span className="text-2xl font-bold text-slate-800">VIGNIQ</span>
               </div>
-              <h1 className="text-2xl font-bold text-blue-600 mb-2">
-                {showForgotPassword ? 'Reset Password' : ''}
+              <h1 className="text-2xl font-bold text-slate-800 mb-2">
+                {showForgotPassword ? 'Reset Your Password' : 'Sign In'}
               </h1>
-              <p className="text-gray-600">
+              <p className="text-slate-600">
                 {showForgotPassword
-                  ? 'Enter your details to reset your password.'
-                  : 'Login to continue your AI learning journey.'
+                  ? 'Enter your details to reset your password securely.'
+                  : 'Welcome back! Please sign in to your account.'
                 }
               </p>
             </div>
