@@ -156,62 +156,76 @@ const SuperAdminDashboard: React.FC = () => {
       {/* Request Overview */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Link to="/admin-requests" className="group">
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-all duration-200">
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-lg hover:border-red-200 transition-all duration-300 group-hover:-translate-y-1">
             <div className="flex items-center gap-4">
-              <div className="p-3 bg-red-100 rounded-lg group-hover:bg-red-200 transition-colors duration-200">
+              <div className="p-3 bg-red-50 rounded-xl group-hover:bg-red-100 transition-all duration-200">
                 <AlertCircle className="w-6 h-6 text-red-600" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-gray-900">Pending Requests</h3>
+                <h3 className="text-lg font-semibold text-slate-900">Pending Requests</h3>
                 <p className="text-2xl font-bold text-red-600 mt-1">{stats.pendingRequests}</p>
+                <p className="text-sm text-slate-500 mt-1">Requires immediate attention</p>
               </div>
             </div>
           </div>
         </Link>
 
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
           <div className="flex items-center gap-4">
-            <div className="p-3 bg-blue-100 rounded-lg">
+            <div className="p-3 bg-blue-50 rounded-xl">
               <Clock className="w-6 h-6 text-blue-600" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-900">In Progress</h3>
+              <h3 className="text-lg font-semibold text-slate-900">In Progress</h3>
               <p className="text-2xl font-bold text-blue-600 mt-1">{stats.inProgressRequests}</p>
+              <p className="text-sm text-slate-500 mt-1">Currently being processed</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
           <div className="flex items-center gap-4">
-            <div className="p-3 bg-green-100 rounded-lg">
+            <div className="p-3 bg-green-50 rounded-xl">
               <CheckCircle className="w-6 h-6 text-green-600" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-900">Completed</h3>
+              <h3 className="text-lg font-semibold text-slate-900">Completed</h3>
               <p className="text-2xl font-bold text-green-600 mt-1">{stats.completedRequests}</p>
+              <p className="text-sm text-slate-500 mt-1">Successfully resolved</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Recent Activities */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-        <div className="p-6 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900">Recent System Activities</h2>
+      <div className="bg-white rounded-xl shadow-sm border border-slate-200">
+        <div className="p-6 border-b border-slate-200">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-semibold text-slate-900">Recent System Activities</h2>
+            <div className="flex items-center gap-2 text-sm text-slate-500">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              Live updates
+            </div>
+          </div>
         </div>
         <div className="p-6">
           <div className="space-y-4">
-            {recentActivities.map((activity) => {
+            {recentActivities.map((activity, index) => {
               const IconComponent = activity.icon;
               return (
-                <div key={activity.id} className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-50 transition-colors duration-150">
-                  <div className={`p-2 rounded-lg bg-gray-100`}>
+                <div key={activity.id} className={`flex items-start gap-4 p-4 rounded-xl hover:bg-slate-50 transition-all duration-200 ${index === 0 ? 'bg-blue-50/50' : ''}`}>
+                  <div className={`p-2 rounded-xl bg-white shadow-sm border`}>
                     <IconComponent className={`w-5 h-5 ${activity.color}`} />
                   </div>
                   <div className="flex-1">
-                    <p className="text-gray-900 font-medium">{activity.message}</p>
-                    <p className="text-gray-500 text-sm mt-1">{activity.timestamp}</p>
+                    <p className="text-slate-900 font-medium">{activity.message}</p>
+                    <p className="text-slate-500 text-sm mt-1">{activity.timestamp}</p>
                   </div>
+                  {index === 0 && (
+                    <div className="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
+                      New
+                    </div>
+                  )}
                 </div>
               );
             })}
