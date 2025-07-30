@@ -64,15 +64,15 @@ const SuperAdminDashboard: React.FC = () => {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Super Admin Dashboard</h1>
-          <p className="mt-2 text-gray-600">Manage the entire system and monitor all activities</p>
+          <h1 className="text-3xl font-bold text-slate-900">Super Admin Dashboard</h1>
+          <p className="mt-2 text-slate-600">Manage the entire system and monitor all activities</p>
         </div>
         <div className="flex items-center space-x-4">
           <Link
             to="/create-school"
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all duration-200 flex items-center gap-2"
+            className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-200 flex items-center gap-2 font-medium shadow-lg hover:shadow-xl"
           >
             <School className="w-4 h-4" />
             Create School
@@ -81,69 +81,72 @@ const SuperAdminDashboard: React.FC = () => {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
         <Link to="/schools" className="group">
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-all duration-200">
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-lg hover:border-blue-200 transition-all duration-300 group-hover:-translate-y-1">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Total Schools</p>
-                <p className="text-3xl font-bold text-gray-900 mt-2">{stats.totalSchools}</p>
+                <p className="text-sm font-medium text-slate-600">Total Schools</p>
+                <p className="text-3xl font-bold text-slate-900 mt-2">{stats.totalSchools}</p>
               </div>
-              <div className="p-3 bg-blue-100 rounded-lg group-hover:bg-blue-200 transition-colors duration-200">
+              <div className="p-3 bg-blue-50 rounded-xl group-hover:bg-blue-100 transition-all duration-200">
                 <School className="w-6 h-6 text-blue-600" />
               </div>
             </div>
             <div className="flex items-center mt-4 text-sm">
+              <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
               <span className="text-green-600 font-medium">{stats.activeSchools} active</span>
-              <span className="text-gray-500 ml-2">schools running</span>
+              <span className="text-slate-500 ml-2">schools running</span>
             </div>
           </div>
         </Link>
 
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Total Users</p>
-              <p className="text-3xl font-bold text-gray-900 mt-2">{stats.totalUsers.toLocaleString()}</p>
+              <p className="text-sm font-medium text-slate-600">Total Users</p>
+              <p className="text-3xl font-bold text-slate-900 mt-2">{stats.totalUsers.toLocaleString()}</p>
             </div>
-            <div className="p-3 bg-green-100 rounded-lg">
+            <div className="p-3 bg-green-50 rounded-xl">
               <Users className="w-6 h-6 text-green-600" />
             </div>
           </div>
           <div className="flex items-center mt-4 text-sm">
             <TrendingUp className="w-4 h-4 text-green-500 mr-1" />
             <span className="text-green-600 font-medium">+12%</span>
-            <span className="text-gray-500 ml-2">vs last month</span>
+            <span className="text-slate-500 ml-2">vs last month</span>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">System Admins</p>
-              <p className="text-3xl font-bold text-gray-900 mt-2">{stats.totalAdmins}</p>
+              <p className="text-sm font-medium text-slate-600">System Admins</p>
+              <p className="text-3xl font-bold text-slate-900 mt-2">{stats.totalAdmins}</p>
             </div>
-            <div className="p-3 bg-purple-100 rounded-lg">
+            <div className="p-3 bg-purple-50 rounded-xl">
               <Shield className="w-6 h-6 text-purple-600" />
             </div>
           </div>
           <div className="flex items-center mt-4 text-sm">
+            <div className="w-2 h-2 bg-purple-500 rounded-full mr-2 animate-pulse"></div>
             <span className="text-purple-600 font-medium">Active monitoring</span>
           </div>
         </div>
 
         <Link to="/admin-requests" className="group">
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-all duration-200">
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-lg hover:border-yellow-200 transition-all duration-300 group-hover:-translate-y-1">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Pending Requests</p>
-                <p className="text-3xl font-bold text-gray-900 mt-2">{stats.pendingRequests}</p>
+                <p className="text-sm font-medium text-slate-600">Pending Requests</p>
+                <p className="text-3xl font-bold text-slate-900 mt-2">{stats.pendingRequests}</p>
               </div>
-              <div className="p-3 bg-yellow-100 rounded-lg group-hover:bg-yellow-200 transition-colors duration-200">
+              <div className="p-3 bg-yellow-50 rounded-xl group-hover:bg-yellow-100 transition-all duration-200">
                 <Clock className="w-6 h-6 text-yellow-600" />
               </div>
             </div>
             <div className="flex items-center mt-4 text-sm">
+              <div className="w-2 h-2 bg-yellow-500 rounded-full mr-2"></div>
               <span className="text-yellow-600 font-medium">Needs attention</span>
             </div>
           </div>
