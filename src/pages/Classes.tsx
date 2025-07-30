@@ -1,11 +1,10 @@
-
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import MainLayout from '../components/Layout/MainLayout';
 import Breadcrumb from '../components/Layout/Breadcrumb';
 import { getClasses } from '../data/classes';
-import { Users, Plus, Search, BookOpen,LoaderCircle } from 'lucide-react';
+import { Users, Plus, Search, BookOpen, LoaderCircle, TrendingUp, Target } from 'lucide-react';
 import { getClassesBySchoolId } from '@/services/class';
 
 const Classes: React.FC = () => {
@@ -18,8 +17,8 @@ const Classes: React.FC = () => {
   const filteredClasses = classes.filter(classItem =>
     (classItem.class_number && classItem.class_number.toString().toLowerCase().includes(searchTerm.toLowerCase())) ||
     (classItem.section && classItem.section.toLowerCase().includes(searchTerm.toLowerCase())) ||
-    (classItem.class_number && classItem.section && ('Class '+classItem.class_number + ' - ' + classItem.section).toLowerCase().includes(searchTerm.toLowerCase()))
-    // classItem.academicYear.toLowerCase().includes(searchTerm.toLowerCase())
+    (classItem.class_number && classItem.section && ('Class '+classItem.class_number + ' - ' + classItem.section).toLowerCase().includes(searchTerm.toLowerCase())) ||
+    (classItem.teacher_name && classItem.teacher_name.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   const breadcrumbItems = user?.role === 'admin'
@@ -47,95 +46,160 @@ const Classes: React.FC = () => {
     getClasses();
   }, []);
 
-  
-
   return (
     <MainLayout pageTitle="Classes">
-      <div className="space-y-6">
+      <div className="space-y-8">
         <Breadcrumb items={breadcrumbItems} />
 
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-800">Classes</h1>
+        <div className="section-header">
+          <div className="flex items-center gap-4 animate-fade-in">
+            <div className="p-4 rounded-3xl bg-gradient-to-br from-blue-500 to-indigo-600 shadow-lg">
+              <BookOpen className="w-8 h-8 text-white" />
+            </div>
+            <div>
+              <h1 className="section-title">Classes</h1>
+              <p className="section-subtitle">Manage your educational classes and sections</p>
+            </div>
+          </div>
           {user?.role === 'admin' && (
             <Link
               to="/add-class"
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-2"
+              className="action-button animate-slide-left"
             >
-              <Plus className="w-4 h-4" />
+              <Plus className="w-5 h-5" />
               Add Class
             </Link>
           )}
         </div>
 
-        <div className="mb-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-            <input
-              type="text"
-              placeholder="Search classes by name, section or academic year..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+        {/* Search and Stats */}
+        <div className="flex flex-col lg:flex-row gap-6 animate-slide-up">
+          <div className="flex-1">
+            <div className="search-modern">
+              <Search className="search-icon" />
+              <input
+                type="text"
+                placeholder="Search classes by name, section, teacher or academic year..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-3 p-4 card-modern bg-blue-50/80">
+              <div className="p-2 rounded-xl bg-blue-100 text-blue-600">
+                <BookOpen className="w-5 h-5" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-slate-600">Total Classes</p>
+                <p className="text-xl font-bold text-blue-600">{classes.length}</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 p-4 card-modern bg-emerald-50/80">
+              <div className="p-2 rounded-xl bg-emerald-100 text-emerald-600">
+                <Users className="w-5 h-5" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-slate-600">Total Students</p>
+                <p className="text-xl font-bold text-emerald-600">
+                  {classes.reduce((sum, cls) => sum + (cls.student_count || 0), 0)}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredClasses.map((classItem) => (
+        <div className="grid-modern grid-cards">
+          {filteredClasses.map((classItem, index) => (
             <Link
               key={classItem.class_id}
               to={`/class-details/${classItem.class_id}`}
-              className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow"
+              className="card-interactive animate-scale-in"
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-800">
-                    {'Class '+classItem.class_number} - {classItem.section}
-                  </h3>
-                  <p className="text-sm text-gray-500">{classItem.academicYear || null}</p>
+              <div className="p-8">
+                <div className="flex items-start justify-between mb-6">
+                  <div className="flex items-center gap-4">
+                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-3xl flex items-center justify-center shadow-lg">
+                      <BookOpen className="w-8 h-8 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-slate-800 group-hover:text-blue-600 transition-colors duration-200">
+                        {'Class '+classItem.class_number} - {classItem.section}
+                      </h3>
+                      <div className="flex items-center gap-2 mt-1">
+                        <div className="p-1 rounded-lg bg-blue-100 text-blue-600">
+                          <Target className="w-4 h-4" />
+                        </div>
+                        <span className="text-sm font-medium text-slate-600">{classItem.academicYear || '2025-26'}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="status-active"></div>
+                    <span className="text-sm font-medium text-emerald-600">Active</span>
+                  </div>
                 </div>
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <BookOpen className="w-5 h-5 text-blue-600" />
-                </div>
-              </div>
 
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Students:</span>
-                  <span className="font-medium text-gray-800">{classItem.student_count}</span>
+                <div className="space-y-4 mb-6">
+                  <div className="flex justify-between items-center p-3 rounded-2xl bg-slate-50/80">
+                    <span className="text-slate-600 font-medium">Students:</span>
+                    <span className="font-bold text-slate-800 px-3 py-1 bg-blue-100 text-blue-800 rounded-xl">
+                      {classItem.student_count}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 rounded-2xl bg-slate-50/80">
+                    <span className="text-slate-600 font-medium">Teacher:</span>
+                    <span className="font-bold text-slate-800">{classItem.teacher_name ? classItem.teacher_name : 'N/A'}</span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 rounded-2xl bg-slate-50/80">
+                    <span className="text-slate-600 font-medium">Board:</span>
+                    <span className="font-bold text-slate-800">{classItem.school_board_name || 'Standard'}</span>
+                  </div>
                 </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Teacher:</span>
-                  <span className="font-medium text-gray-800">{classItem.teacher_name ? classItem.teacher_name : 'N/A'}</span>
-                </div>
-              </div>
 
-              <div className="mt-4 pt-4 border-t border-gray-100">
-                <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                  Active
-                </span>
+                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                  <span className="badge-success">
+                    Active
+                  </span>
+                  <div className="flex items-center gap-2 text-slate-500">
+                    <TrendingUp className="w-4 h-4" />
+                    <span className="text-sm font-medium">Progress: 75%</span>
+                  </div>
+                </div>
               </div>
             </Link>
           ))}
         </div>
+
         {filteredClasses.length === 0 && !loader && (
-          <div className="text-center py-12">
-            <BookOpen className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No Classes found</h3>
-            <p className="text-gray-500">
+          <div className="empty-state animate-fade-in">
+            <BookOpen className="empty-state-icon" />
+            <h3 className="empty-state-title">No Classes Found</h3>
+            <p className="empty-state-description">
               {searchTerm 
-                ? 'Try adjusting your search terms' 
-                : 'No classes have been added yet.'}
+                ? 'Try adjusting your search terms to find classes.' 
+                : 'No classes have been added yet. Create your first class to get started.'}
             </p>
+            {!searchTerm && user?.role === 'admin' && (
+              <Link
+                to="/add-class"
+                className="action-button mt-6"
+              >
+                <Plus className="w-5 h-5" />
+                Add First Class
+              </Link>
+            )}
           </div>
         )}
-        {
-          loader && (
-            <div className="text-center py-12">
-              <LoaderCircle className="spinner-icon mx-auto" size={40} />
-            </div>
-          )
-        }
+
+        {loader && (
+          <div className="empty-state">
+            <LoaderCircle className="empty-state-icon animate-spin text-blue-500" />
+            <h3 className="empty-state-title">Loading Classes</h3>
+            <p className="empty-state-description">Please wait while we fetch the class data...</p>
+          </div>
+        )}
       </div>
     </MainLayout>
   );

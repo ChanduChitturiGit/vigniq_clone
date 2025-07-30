@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, Users, Clock, CheckCircle, ArrowRight, ExternalLink } from 'lucide-react';
+import { BookOpen, Users, Clock, CheckCircle, ArrowRight, ExternalLink, Brain, Target, Award, TrendingUp } from 'lucide-react';
 
 const TeacherDashboard: React.FC = () => {
   const stats = [
@@ -9,7 +9,8 @@ const TeacherDashboard: React.FC = () => {
       value: '3',
       subValue: '85 total students',
       icon: BookOpen,
-      color: 'bg-blue-500',
+      color: 'from-blue-500 to-indigo-600',
+      bgColor: 'bg-blue-50',
       link: '/classes'
     },
     {
@@ -17,23 +18,26 @@ const TeacherDashboard: React.FC = () => {
       value: '85',
       subValue: 'across all classes',
       icon: Users,
-      color: 'bg-green-500',
+      color: 'from-emerald-500 to-teal-600',
+      bgColor: 'bg-emerald-50',
       link: '/students'
     },
     {
-      title: 'Pending Requests',
-      value: '7',
-      subValue: 'from students',
-      icon: Clock,
-      color: 'bg-yellow-500',
-      link: '/requests'
+      title: 'AI Interactions',
+      value: '342',
+      subValue: 'this week',
+      icon: Brain,
+      color: 'from-violet-500 to-purple-600',
+      bgColor: 'bg-violet-50',
+      link: '/view-ebooks'
     },
     {
-      title: 'Completed Today',
+      title: 'Completed Tasks',
       value: '12',
-      subValue: 'tasks completed',
+      subValue: 'today',
       icon: CheckCircle,
-      color: 'bg-purple-500',
+      color: 'from-amber-500 to-orange-600',
+      bgColor: 'bg-amber-50',
       link: '/requests'
     }
   ];
@@ -46,7 +50,8 @@ const TeacherDashboard: React.FC = () => {
       class: 'Class 10-A',
       subject: 'Profile Update Request',
       time: '2 hours ago',
-      priority: 'medium'
+      priority: 'medium',
+      avatar: 'AJ'
     },
     {
       id: '2',
@@ -54,7 +59,8 @@ const TeacherDashboard: React.FC = () => {
       class: 'Class 9-B',
       subject: 'Grade Review Request',
       time: '4 hours ago',
-      priority: 'high'
+      priority: 'high',
+      avatar: 'BW'
     },
     {
       id: '3',
@@ -62,7 +68,8 @@ const TeacherDashboard: React.FC = () => {
       class: 'Class 10-A',
       subject: 'Schedule Change Request',
       time: '1 day ago',
-      priority: 'low'
+      priority: 'low',
+      avatar: 'CB'
     }
   ];
 
@@ -73,60 +80,80 @@ const TeacherDashboard: React.FC = () => {
       name: 'Class 10-A',
       subject: 'Mathematics',
       students: 30,
-      nextClass: 'Today 2:00 PM'
+      nextClass: 'Today 2:00 PM',
+      progress: 75
     },
     {
       id: '2',
       name: 'Class 9-B',
       subject: 'Mathematics',
       students: 28,
-      nextClass: 'Tomorrow 10:00 AM'
+      nextClass: 'Tomorrow 10:00 AM',
+      progress: 68
     },
     {
       id: '3',
       name: 'Class 11-C',
       subject: 'Mathematics',
       students: 27,
-      nextClass: 'Tomorrow 3:00 PM'
+      nextClass: 'Tomorrow 3:00 PM',
+      progress: 82
     }
   ];
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'high': return 'bg-red-100 text-red-800';
-      case 'medium': return 'bg-yellow-100 text-yellow-800';
-      case 'low': return 'bg-blue-100 text-blue-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'high': return 'bg-rose-100 text-rose-800 border-rose-200';
+      case 'medium': return 'bg-amber-100 text-amber-800 border-amber-200';
+      case 'low': return 'bg-blue-100 text-blue-800 border-blue-200';
+      default: return 'bg-slate-100 text-slate-800 border-slate-200';
     }
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-10">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-800">Teacher Dashboard</h1>
-        <div className="text-sm text-gray-500">
-          Manage your classes and students
+        <div className="animate-fade-in">
+          <h1 className="text-5xl font-bold text-gradient mb-4">Teacher Dashboard</h1>
+          <p className="text-xl text-slate-600">
+            Manage your classes and empower students with AI-driven learning
+          </p>
+        </div>
+        <div className="flex items-center gap-4 animate-slide-left">
+          <Link
+            to="/view-ebooks"
+            className="action-button"
+          >
+            <Brain className="w-5 h-5" />
+            AI Library
+          </Link>
         </div>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Enhanced Stats Grid */}
+      <div className="grid-modern grid-responsive">
         {stats.map((stat, index) => {
           const Icon = stat.icon;
           return (
             <Link
               key={index}
               to={stat.link}
-              className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-lg transition-all duration-300 cursor-pointer group"
+              className="group animate-scale-in"
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">{stat.title}</p>
-                  <p className="text-2xl font-bold text-gray-900 mt-1">{stat.value}</p>
-                  <p className="text-xs text-gray-500 mt-1">{stat.subValue}</p>
+              <div className="stats-card group-hover:shadow-2xl group-hover:-translate-y-2">
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <p className="metric-label">{stat.title}</p>
+                    <p className="metric-value">{stat.value}</p>
+                    <p className="text-sm text-slate-500 mt-1">{stat.subValue}</p>
+                  </div>
+                  <div className={`p-4 rounded-3xl bg-gradient-to-br ${stat.color} shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                    <Icon className="w-8 h-8 text-white" />
+                  </div>
                 </div>
-                <div className={`p-3 rounded-lg ${stat.color} group-hover:scale-110 transition-transform duration-300`}>
-                  <Icon className="w-6 h-6 text-white" />
+                <div className={`h-2 ${stat.bgColor} rounded-full overflow-hidden`}>
+                  <div className={`h-full bg-gradient-to-r ${stat.color} rounded-full w-3/4 transition-all duration-1000`}></div>
                 </div>
               </div>
             </Link>
@@ -135,89 +162,124 @@ const TeacherDashboard: React.FC = () => {
       </div>
 
       {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Recent Requests */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-          <div className="p-6 border-b border-gray-200 flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-gray-800">Recent Requests</h2>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        {/* Enhanced Recent Requests */}
+        <div className="card-modern animate-slide-up" style={{ animationDelay: '0.3s' }}>
+          <div className="p-8 border-b border-slate-100 flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-bold text-slate-800">Recent Requests</h2>
+              <p className="text-slate-600 mt-1">Student requests requiring attention</p>
+            </div>
             <Link 
               to="/requests"
-              className="text-blue-600 hover:text-blue-700 p-2 hover:bg-blue-50 rounded-lg transition-colors"
+              className="p-3 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-2xl transition-all duration-200 hover:scale-105"
               title="View all requests"
             >
-              <ExternalLink className="w-4 h-4" />
+              <ExternalLink className="w-5 h-5" />
             </Link>
           </div>
-          <div className="p-6">
+          <div className="p-8">
             <div className="space-y-4">
-              {recentRequests.map((request) => (
+              {recentRequests.map((request, index) => (
                 <Link
                   key={request.id}
                   to={`/requests?request=${request.id}`}
-                  className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                  className="flex items-center justify-between p-6 bg-slate-50/80 rounded-3xl hover:bg-slate-100/80 transition-all duration-300 hover:scale-[1.02] group"
                 >
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <p className="text-sm font-medium text-gray-900">{request.studentName}</p>
-                      <span className={`px-2 py-1 text-xs font-medium rounded ${getPriorityColor(request.priority)}`}>
-                        {request.priority}
-                      </span>
+                  <div className="flex items-center gap-4 flex-1">
+                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center text-white font-bold shadow-lg">
+                      {request.avatar}
                     </div>
-                    <p className="text-xs text-gray-600">{request.class} - {request.subject}</p>
-                    <p className="text-xs text-gray-500">{request.time}</p>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <p className="text-base font-bold text-slate-900">{request.studentName}</p>
+                        <span className={`px-3 py-1 text-xs font-semibold rounded-full border ${getPriorityColor(request.priority)}`}>
+                          {request.priority}
+                        </span>
+                      </div>
+                      <p className="text-sm text-slate-600 font-medium">{request.class} • {request.subject}</p>
+                      <p className="text-xs text-slate-500 mt-1 flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
+                        {request.time}
+                      </p>
+                    </div>
                   </div>
-                  <ArrowRight className="w-4 h-4 text-gray-400" />
+                  <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-blue-600 transition-colors duration-200" />
                 </Link>
               ))}
               
               {recentRequests.length === 0 && (
-                <div className="text-center py-8 text-gray-500">
-                  <Clock className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                  <p className="text-sm">No recent requests</p>
+                <div className="text-center py-12 text-slate-500">
+                  <Clock className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                  <p className="font-medium">No recent requests</p>
                 </div>
               )}
             </div>
           </div>
         </div>
 
-        {/* My Classes */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-          <div className="p-6 border-b border-gray-200 flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-gray-800">My Classes</h2>
+        {/* Enhanced My Classes */}
+        <div className="card-modern animate-slide-up" style={{ animationDelay: '0.4s' }}>
+          <div className="p-8 border-b border-slate-100 flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-bold text-slate-800">My Classes</h2>
+              <p className="text-slate-600 mt-1">Your teaching schedule and progress</p>
+            </div>
             <Link 
               to="/classes"
-              className="text-blue-600 hover:text-blue-700 p-2 hover:bg-blue-50 rounded-lg transition-colors"
+              className="p-3 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-2xl transition-all duration-200 hover:scale-105"
               title="View all classes"
             >
-              <ExternalLink className="w-4 h-4" />
+              <ExternalLink className="w-5 h-5" />
             </Link>
           </div>
-          <div className="p-6">
+          <div className="p-8">
             <div className="space-y-4">
-              {myClasses.map((classItem) => (
+              {myClasses.map((classItem, index) => (
                 <Link
                   key={classItem.id}
                   to={`/class-details/${classItem.id}`}
-                  className="flex items-center justify-between p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
+                  className="block p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-3xl hover:from-blue-100 hover:to-indigo-100 transition-all duration-300 hover:scale-[1.02] group border border-blue-100"
                 >
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <p className="text-sm font-medium text-gray-900">{classItem.name}</p>
-                      <span className="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded">
-                        {classItem.subject}
-                      </span>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
+                        <BookOpen className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-lg font-bold text-slate-900">{classItem.name}</p>
+                        <span className="px-3 py-1 text-xs bg-blue-100 text-blue-800 rounded-full font-semibold">
+                          {classItem.subject}
+                        </span>
+                      </div>
                     </div>
-                    <p className="text-xs text-gray-600">{classItem.students} students</p>
-                    <p className="text-xs text-gray-500">Next: {classItem.nextClass}</p>
+                    <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-blue-600 transition-colors duration-200" />
                   </div>
-                  <ArrowRight className="w-4 h-4 text-gray-400" />
+                  <div className="space-y-3">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-600 font-medium">{classItem.students} students</span>
+                      <span className="text-slate-500">Next: {classItem.nextClass}</span>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-600 font-medium">Progress</span>
+                        <span className="text-slate-700 font-bold">{classItem.progress}%</span>
+                      </div>
+                      <div className="progress-modern">
+                        <div 
+                          className="progress-bar" 
+                          style={{ width: `${classItem.progress}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
                 </Link>
               ))}
               
               {myClasses.length === 0 && (
-                <div className="text-center py-8 text-gray-500">
-                  <BookOpen className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                  <p className="text-sm">No classes assigned</p>
+                <div className="text-center py-12 text-slate-500">
+                  <BookOpen className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                  <p className="font-medium">No classes assigned</p>
                 </div>
               )}
             </div>

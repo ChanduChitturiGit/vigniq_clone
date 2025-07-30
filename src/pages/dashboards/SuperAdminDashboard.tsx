@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
@@ -11,7 +10,13 @@ import {
   Clock,
   UserCheck,
   Settings,
-  BarChart3
+  BarChart3,
+  Brain,
+  Sparkles,
+  Zap,
+  Globe,
+  Award,
+  Target
 } from 'lucide-react';
 
 const SuperAdminDashboard: React.FC = () => {
@@ -23,7 +28,9 @@ const SuperAdminDashboard: React.FC = () => {
     activeSchools: 23,
     pendingRequests: 8,
     completedRequests: 156,
-    inProgressRequests: 12
+    inProgressRequests: 12,
+    aiInteractions: 15420,
+    learningHours: 8750
   };
 
   const recentActivities = [
@@ -33,7 +40,8 @@ const SuperAdminDashboard: React.FC = () => {
       message: 'New school "Sunrise Academy" has been created',
       timestamp: '2 hours ago',
       icon: School,
-      color: 'text-green-600'
+      color: 'text-emerald-600',
+      bgColor: 'bg-emerald-100'
     },
     {
       id: 2,
@@ -41,173 +49,208 @@ const SuperAdminDashboard: React.FC = () => {
       message: 'Admin Sarah Johnson assigned to Greenwood High',
       timestamp: '4 hours ago',
       icon: UserCheck,
-      color: 'text-blue-600'
+      color: 'text-blue-600',
+      bgColor: 'bg-blue-100'
     },
     {
       id: 3,
-      type: 'request_completed',
-      message: 'System upgrade request completed for Tech Valley School',
+      type: 'ai_milestone',
+      message: 'AI system processed 1000+ learning interactions today',
       timestamp: '6 hours ago',
-      icon: CheckCircle,
-      color: 'text-green-600'
+      icon: Brain,
+      color: 'text-violet-600',
+      bgColor: 'bg-violet-100'
     },
     {
       id: 4,
-      type: 'alert',
-      message: 'High server load detected - Auto-scaling triggered',
+      type: 'request_completed',
+      message: 'System upgrade request completed for Tech Valley School',
       timestamp: '8 hours ago',
-      icon: AlertCircle,
-      color: 'text-yellow-600'
+      icon: CheckCircle,
+      color: 'text-emerald-600',
+      bgColor: 'bg-emerald-100'
+    }
+  ];
+
+  const quickStats = [
+    {
+      title: 'Total Schools',
+      value: stats.totalSchools,
+      change: '+12%',
+      changeType: 'positive',
+      icon: School,
+      color: 'from-blue-500 to-indigo-600',
+      bgColor: 'bg-blue-50',
+      link: '/schools'
+    },
+    {
+      title: 'Active Users',
+      value: stats.totalUsers.toLocaleString(),
+      change: '+8%',
+      changeType: 'positive',
+      icon: Users,
+      color: 'from-emerald-500 to-teal-600',
+      bgColor: 'bg-emerald-50',
+      link: '/schools'
+    },
+    {
+      title: 'AI Interactions',
+      value: stats.aiInteractions.toLocaleString(),
+      change: '+24%',
+      changeType: 'positive',
+      icon: Brain,
+      color: 'from-violet-500 to-purple-600',
+      bgColor: 'bg-violet-50',
+      link: '/view-ebooks'
+    },
+    {
+      title: 'Learning Hours',
+      value: stats.learningHours.toLocaleString(),
+      change: '+15%',
+      changeType: 'positive',
+      icon: Award,
+      color: 'from-amber-500 to-orange-600',
+      bgColor: 'bg-amber-50',
+      link: '/schools'
     }
   ];
 
   return (
-    <div className="space-y-8">
-      {/* Header */}
+    <div className="space-y-10">
+      {/* Enhanced Header */}
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Super Admin Dashboard</h1>
-          <p className="mt-2 text-gray-600">Manage the entire system and monitor all activities</p>
+        <div className="animate-fade-in">
+          <h1 className="text-5xl font-bold text-gradient mb-4">Super Admin Dashboard</h1>
+          <p className="text-xl text-slate-600 leading-relaxed">
+            Manage the entire AI-powered learning ecosystem and monitor all activities
+          </p>
         </div>
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 animate-slide-left">
           <Link
             to="/create-school"
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all duration-200 flex items-center gap-2"
+            className="action-button"
           >
-            <School className="w-4 h-4" />
+            <School className="w-5 h-5" />
             Create School
+          </Link>
+          <Link
+            to="/upload-ebooks"
+            className="btn-success flex items-center gap-2"
+          >
+            <Brain className="w-5 h-5" />
+            Upload AI Content
           </Link>
         </div>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Link to="/schools" className="group">
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-all duration-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Total Schools</p>
-                <p className="text-3xl font-bold text-gray-900 mt-2">{stats.totalSchools}</p>
+      {/* Enhanced Stats Grid */}
+      <div className="grid-modern grid-responsive">
+        {quickStats.map((stat, index) => {
+          const IconComponent = stat.icon;
+          return (
+            <Link 
+              key={stat.title}
+              to={stat.link} 
+              className="group animate-scale-in" 
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <div className="stats-card group-hover:shadow-2xl group-hover:-translate-y-2 transition-all duration-300">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex-1">
+                    <p className="metric-label">{stat.title}</p>
+                    <p className="metric-value">{stat.value}</p>
+                    <div className={`metric-change ${stat.changeType}`}>
+                      <TrendingUp className="w-4 h-4" />
+                      <span>{stat.change}</span>
+                      <span className="text-slate-500">vs last month</span>
+                    </div>
+                  </div>
+                  <div className={`p-4 rounded-3xl bg-gradient-to-br ${stat.color} shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                    <IconComponent className="w-8 h-8 text-white" />
+                  </div>
+                </div>
+                <div className={`h-2 ${stat.bgColor} rounded-full overflow-hidden`}>
+                  <div className={`h-full bg-gradient-to-r ${stat.color} rounded-full w-3/4 transition-all duration-1000`}></div>
+                </div>
               </div>
-              <div className="p-3 bg-blue-100 rounded-lg group-hover:bg-blue-200 transition-colors duration-200">
-                <School className="w-6 h-6 text-blue-600" />
-              </div>
-            </div>
-            <div className="flex items-center mt-4 text-sm">
-              <span className="text-green-600 font-medium">{stats.activeSchools} active</span>
-              <span className="text-gray-500 ml-2">schools running</span>
-            </div>
-          </div>
-        </Link>
-
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Total Users</p>
-              <p className="text-3xl font-bold text-gray-900 mt-2">{stats.totalUsers.toLocaleString()}</p>
-            </div>
-            <div className="p-3 bg-green-100 rounded-lg">
-              <Users className="w-6 h-6 text-green-600" />
-            </div>
-          </div>
-          <div className="flex items-center mt-4 text-sm">
-            <TrendingUp className="w-4 h-4 text-green-500 mr-1" />
-            <span className="text-green-600 font-medium">+12%</span>
-            <span className="text-gray-500 ml-2">vs last month</span>
-          </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">System Admins</p>
-              <p className="text-3xl font-bold text-gray-900 mt-2">{stats.totalAdmins}</p>
-            </div>
-            <div className="p-3 bg-purple-100 rounded-lg">
-              <Shield className="w-6 h-6 text-purple-600" />
-            </div>
-          </div>
-          <div className="flex items-center mt-4 text-sm">
-            <span className="text-purple-600 font-medium">Active monitoring</span>
-          </div>
-        </div>
-
-        <Link to="/admin-requests" className="group">
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-all duration-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Pending Requests</p>
-                <p className="text-3xl font-bold text-gray-900 mt-2">{stats.pendingRequests}</p>
-              </div>
-              <div className="p-3 bg-yellow-100 rounded-lg group-hover:bg-yellow-200 transition-colors duration-200">
-                <Clock className="w-6 h-6 text-yellow-600" />
-              </div>
-            </div>
-            <div className="flex items-center mt-4 text-sm">
-              <span className="text-yellow-600 font-medium">Needs attention</span>
-            </div>
-          </div>
-        </Link>
+            </Link>
+          );
+        })}
       </div>
 
       {/* Request Overview */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Link to="/admin-requests" className="group">
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-all duration-200">
-            <div className="flex items-center gap-4">
-              <div className="p-3 bg-red-100 rounded-lg group-hover:bg-red-200 transition-colors duration-200">
-                <AlertCircle className="w-6 h-6 text-red-600" />
+      <div className="grid-modern grid-cards">
+        <Link to="/admin-requests" className="group animate-slide-up" style={{ animationDelay: '0.2s' }}>
+          <div className="feature-card">
+            <div className="flex items-center gap-6">
+              <div className="p-4 rounded-3xl bg-gradient-to-br from-rose-500 to-red-600 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <AlertCircle className="w-8 h-8 text-white" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-gray-900">Pending Requests</h3>
-                <p className="text-2xl font-bold text-red-600 mt-1">{stats.pendingRequests}</p>
+                <h3 className="text-2xl font-bold text-slate-900">Pending Requests</h3>
+                <p className="text-4xl font-bold text-rose-600 mt-2">{stats.pendingRequests}</p>
+                <p className="text-slate-500 mt-1">Needs immediate attention</p>
               </div>
             </div>
           </div>
         </Link>
 
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-blue-100 rounded-lg">
-              <Clock className="w-6 h-6 text-blue-600" />
+        <div className="feature-card animate-slide-up" style={{ animationDelay: '0.3s' }}>
+          <div className="flex items-center gap-6">
+            <div className="p-4 rounded-3xl bg-gradient-to-br from-blue-500 to-indigo-600 shadow-lg">
+              <Clock className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-900">In Progress</h3>
-              <p className="text-2xl font-bold text-blue-600 mt-1">{stats.inProgressRequests}</p>
+              <h3 className="text-2xl font-bold text-slate-900">In Progress</h3>
+              <p className="text-4xl font-bold text-blue-600 mt-2">{stats.inProgressRequests}</p>
+              <p className="text-slate-500 mt-1">Currently being processed</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-green-100 rounded-lg">
-              <CheckCircle className="w-6 h-6 text-green-600" />
+        <div className="feature-card animate-slide-up" style={{ animationDelay: '0.4s' }}>
+          <div className="flex items-center gap-6">
+            <div className="p-4 rounded-3xl bg-gradient-to-br from-emerald-500 to-teal-600 shadow-lg">
+              <CheckCircle className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-900">Completed</h3>
-              <p className="text-2xl font-bold text-green-600 mt-1">{stats.completedRequests}</p>
+              <h3 className="text-2xl font-bold text-slate-900">Completed</h3>
+              <p className="text-4xl font-bold text-emerald-600 mt-2">{stats.completedRequests}</p>
+              <p className="text-slate-500 mt-1">Successfully resolved</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Recent Activities */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-        <div className="p-6 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900">Recent System Activities</h2>
+      <div className="card-modern animate-slide-up" style={{ animationDelay: '0.5s' }}>
+        <div className="p-8 border-b border-slate-100">
+          <div className="flex items-center justify-between">
+            <h2 className="text-3xl font-bold text-slate-900">Recent System Activities</h2>
+            <div className="flex items-center gap-2 text-slate-500">
+              <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+              <span className="text-sm font-medium">Live updates</span>
+            </div>
+          </div>
         </div>
-        <div className="p-6">
-          <div className="space-y-4">
-            {recentActivities.map((activity) => {
+        <div className="p-8">
+          <div className="space-y-6">
+            {recentActivities.map((activity, index) => {
               const IconComponent = activity.icon;
               return (
-                <div key={activity.id} className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-50 transition-colors duration-150">
-                  <div className={`p-2 rounded-lg bg-gray-100`}>
-                    <IconComponent className={`w-5 h-5 ${activity.color}`} />
+                <div key={activity.id} className="flex items-start gap-6 p-6 rounded-3xl hover:bg-slate-50/80 transition-all duration-300 hover:scale-[1.02] group">
+                  <div className={`p-3 rounded-2xl ${activity.bgColor} group-hover:scale-110 transition-transform duration-300`}>
+                    <IconComponent className={`w-6 h-6 ${activity.color}`} />
                   </div>
                   <div className="flex-1">
-                    <p className="text-gray-900 font-medium">{activity.message}</p>
-                    <p className="text-gray-500 text-sm mt-1">{activity.timestamp}</p>
+                    <p className="text-slate-900 font-semibold text-lg">{activity.message}</p>
+                    <p className="text-slate-500 mt-2 flex items-center gap-2">
+                      <Clock className="w-4 h-4" />
+                      {activity.timestamp}
+                    </p>
+                  </div>
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                   </div>
                 </div>
               );
@@ -217,42 +260,51 @@ const SuperAdminDashboard: React.FC = () => {
       </div>
 
       {/* Quick Actions */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-        <div className="p-6 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900">Quick Actions</h2>
+      <div className="card-modern animate-slide-up" style={{ animationDelay: '0.6s' }}>
+        <div className="p-8 border-b border-slate-100">
+          <h2 className="text-3xl font-bold text-slate-900">Quick Actions</h2>
+          <p className="text-slate-600 mt-2">Frequently used administrative tools</p>
         </div>
-        <div className="p-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="p-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Link
               to="/create-school"
-              className="flex items-center gap-3 p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 group"
+              className="flex items-center gap-4 p-6 rounded-3xl border-2 border-blue-200 hover:border-blue-400 hover:bg-blue-50 transition-all duration-300 group hover:scale-105"
             >
-              <School className="w-5 h-5 text-gray-600 group-hover:text-blue-600" />
-              <span className="font-medium text-gray-700 group-hover:text-blue-700">Create School</span>
+              <div className="p-3 rounded-2xl bg-blue-100 text-blue-600 group-hover:bg-blue-200 transition-colors duration-300">
+                <School className="w-6 h-6" />
+              </div>
+              <span className="font-semibold text-slate-700 group-hover:text-blue-700">Create School</span>
             </Link>
             
             <Link
               to="/schools"
-              className="flex items-center gap-3 p-4 rounded-lg border border-gray-200 hover:border-green-300 hover:bg-green-50 transition-all duration-200 group"
+              className="flex items-center gap-4 p-6 rounded-3xl border-2 border-emerald-200 hover:border-emerald-400 hover:bg-emerald-50 transition-all duration-300 group hover:scale-105"
             >
-              <BarChart3 className="w-5 h-5 text-gray-600 group-hover:text-green-600" />
-              <span className="font-medium text-gray-700 group-hover:text-green-700">Manage Schools</span>
+              <div className="p-3 rounded-2xl bg-emerald-100 text-emerald-600 group-hover:bg-emerald-200 transition-colors duration-300">
+                <BarChart3 className="w-6 h-6" />
+              </div>
+              <span className="font-semibold text-slate-700 group-hover:text-emerald-700">Manage Schools</span>
             </Link>
             
             <Link
               to="/admin-requests"
-              className="flex items-center gap-3 p-4 rounded-lg border border-gray-200 hover:border-yellow-300 hover:bg-yellow-50 transition-all duration-200 group"
+              className="flex items-center gap-4 p-6 rounded-3xl border-2 border-amber-200 hover:border-amber-400 hover:bg-amber-50 transition-all duration-300 group hover:scale-105"
             >
-              <AlertCircle className="w-5 h-5 text-gray-600 group-hover:text-yellow-600" />
-              <span className="font-medium text-gray-700 group-hover:text-yellow-700">View Requests</span>
+              <div className="p-3 rounded-2xl bg-amber-100 text-amber-600 group-hover:bg-amber-200 transition-colors duration-300">
+                <AlertCircle className="w-6 h-6" />
+              </div>
+              <span className="font-semibold text-slate-700 group-hover:text-amber-700">View Requests</span>
             </Link>
             
             <Link
-              to="/profile"
-              className="flex items-center gap-3 p-4 rounded-lg border border-gray-200 hover:border-purple-300 hover:bg-purple-50 transition-all duration-200 group"
+              to="/upload-ebooks"
+              className="flex items-center gap-4 p-6 rounded-3xl border-2 border-violet-200 hover:border-violet-400 hover:bg-violet-50 transition-all duration-300 group hover:scale-105"
             >
-              <Settings className="w-5 h-5 text-gray-600 group-hover:text-purple-600" />
-              <span className="font-medium text-gray-700 group-hover:text-purple-700">System Settings</span>
+              <div className="p-3 rounded-2xl bg-violet-100 text-violet-600 group-hover:bg-violet-200 transition-colors duration-300">
+                <Brain className="w-6 h-6" />
+              </div>
+              <span className="font-semibold text-slate-700 group-hover:text-violet-700">AI Content</span>
             </Link>
           </div>
         </div>
