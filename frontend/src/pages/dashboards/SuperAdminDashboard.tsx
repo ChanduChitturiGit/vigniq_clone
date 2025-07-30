@@ -234,42 +234,51 @@ const SuperAdminDashboard: React.FC = () => {
       </div>
 
       {/* Quick Actions */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-        <div className="p-6 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900">Quick Actions</h2>
+      <div className="bg-white rounded-xl shadow-sm border border-slate-200">
+        <div className="p-6 border-b border-slate-200">
+          <h2 className="text-xl font-semibold text-slate-900">Quick Actions</h2>
+          <p className="text-sm text-slate-500 mt-1">Frequently used administrative tasks</p>
         </div>
         <div className="p-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
             <Link
               to="/create-school"
-              className="flex items-center gap-3 p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 group"
+              className="flex items-center gap-3 p-4 rounded-xl border border-slate-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 group hover:-translate-y-0.5"
             >
-              <School className="w-5 h-5 text-gray-600 group-hover:text-blue-600" />
-              <span className="font-medium text-gray-700 group-hover:text-blue-700">Create School</span>
+              <div className="p-2 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors duration-200">
+                <School className="w-5 h-5 text-blue-600" />
+              </div>
+              <span className="font-medium text-slate-700 group-hover:text-blue-700">Create School</span>
             </Link>
             
             <Link
               to="/schools"
-              className="flex items-center gap-3 p-4 rounded-lg border border-gray-200 hover:border-green-300 hover:bg-green-50 transition-all duration-200 group"
+              className="flex items-center gap-3 p-4 rounded-xl border border-slate-200 hover:border-green-300 hover:bg-green-50 transition-all duration-200 group hover:-translate-y-0.5"
             >
-              <BarChart3 className="w-5 h-5 text-gray-600 group-hover:text-green-600" />
-              <span className="font-medium text-gray-700 group-hover:text-green-700">Manage Schools</span>
+              <div className="p-2 bg-green-50 rounded-lg group-hover:bg-green-100 transition-colors duration-200">
+                <BarChart3 className="w-5 h-5 text-green-600" />
+              </div>
+              <span className="font-medium text-slate-700 group-hover:text-green-700">Manage Schools</span>
             </Link>
             
             <Link
               to="/admin-requests"
-              className="flex items-center gap-3 p-4 rounded-lg border border-gray-200 hover:border-yellow-300 hover:bg-yellow-50 transition-all duration-200 group"
+              className="flex items-center gap-3 p-4 rounded-xl border border-slate-200 hover:border-yellow-300 hover:bg-yellow-50 transition-all duration-200 group hover:-translate-y-0.5"
             >
-              <AlertCircle className="w-5 h-5 text-gray-600 group-hover:text-yellow-600" />
-              <span className="font-medium text-gray-700 group-hover:text-yellow-700">View Requests</span>
+              <div className="p-2 bg-yellow-50 rounded-lg group-hover:bg-yellow-100 transition-colors duration-200">
+                <AlertCircle className="w-5 h-5 text-yellow-600" />
+              </div>
+              <span className="font-medium text-slate-700 group-hover:text-yellow-700">View Requests</span>
             </Link>
             
             <Link
               to="/profile"
-              className="flex items-center gap-3 p-4 rounded-lg border border-gray-200 hover:border-purple-300 hover:bg-purple-50 transition-all duration-200 group"
+              className="flex items-center gap-3 p-4 rounded-xl border border-slate-200 hover:border-purple-300 hover:bg-purple-50 transition-all duration-200 group hover:-translate-y-0.5"
             >
-              <Settings className="w-5 h-5 text-gray-600 group-hover:text-purple-600" />
-              <span className="font-medium text-gray-700 group-hover:text-purple-700">System Settings</span>
+              <div className="p-2 bg-purple-50 rounded-lg group-hover:bg-purple-100 transition-colors duration-200">
+                <Settings className="w-5 h-5 text-purple-600" />
+              </div>
+              <span className="font-medium text-slate-700 group-hover:text-purple-700">System Settings</span>
             </Link>
           </div>
         </div>
