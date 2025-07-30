@@ -1,10 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Modern design system with improved color palette and typography */
 
 @layer base {
   :root {
@@ -17,8 +16,8 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 98%;
 
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -34,55 +33,67 @@ All colors MUST be HSL.
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --ring: 217 91% 60%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Modern color palette */
+    --blue-50: 239 100% 97%;
+    --blue-100: 225 100% 94%;
+    --blue-500: 217 91% 60%;
+    --blue-600: 221 83% 53%;
+    --blue-700: 224 76% 48%;
+    
+    --emerald-50: 151 81% 96%;
+    --emerald-100: 149 80% 90%;
+    --emerald-500: 160 84% 39%;
+    --emerald-600: 158 64% 52%;
+    
+    --violet-50: 250 100% 98%;
+    --violet-100: 251 91% 95%;
+    --violet-500: 262 83% 58%;
+    --violet-600: 263 70% 50%;
+    
+    --amber-50: 48 100% 96%;
+    --amber-100: 48 96% 89%;
+    --amber-500: 45 93% 47%;
+    --amber-600: 43 96% 56%;
+    
+    --rose-50: 355 100% 97%;
+    --rose-100: 355 100% 94%;
+    --rose-500: 350 89% 60%;
+    --rose-600: 347 77% 50%;
   }
 
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
-
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
+    --primary: 217 91% 60%;
     --primary-foreground: 222.2 47.4% 11.2%;
-
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --ring: 217 91% 60%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -100,7 +111,343 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/20 text-foreground font-inter;
     overflow: hidden;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   }
+
+  html {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+}
+
+/* Modern animations and transitions */
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.5s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.4s ease-out forwards;
+  }
+
+  .animate-bounce-subtle {
+    animation: bounceSubtle 0.6s ease-out forwards;
+  }
+
+  .glass-effect {
+    @apply bg-white/80 backdrop-blur-xl border border-white/20 shadow-xl shadow-black/5;
+  }
+
+  .glass-effect-dark {
+    @apply bg-slate-900/80 backdrop-blur-xl border border-slate-700/20 shadow-xl shadow-black/20;
+  }
+
+  .gradient-border {
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #667eea 0%, #764ba2 100%) border-box;
+    border: 2px solid transparent;
+  }
+
+  .hover-lift {
+    @apply transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-xl hover:shadow-black/10;
+  }
+
+  .hover-glow {
+    @apply transition-all duration-300 ease-out hover:shadow-lg hover:shadow-blue-500/25;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent;
+  }
+
+  .btn-modern {
+    @apply relative overflow-hidden rounded-xl px-6 py-3 font-medium transition-all duration-300 ease-out;
+    @apply bg-gradient-to-r from-blue-500 to-indigo-600 text-white;
+    @apply hover:from-blue-600 hover:to-indigo-700 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25;
+    @apply active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2;
+  }
+
+  .btn-modern::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 transition-opacity duration-300;
+  }
+
+  .btn-modern:hover::before {
+    @apply opacity-100;
+  }
+
+  .card-modern {
+    @apply bg-white/90 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg shadow-black/5;
+    @apply transition-all duration-300 ease-out hover:shadow-xl hover:shadow-black/10 hover:scale-[1.01];
+  }
+
+  .input-modern {
+    @apply w-full px-4 py-3 rounded-xl border border-slate-200 bg-white/80 backdrop-blur-sm;
+    @apply transition-all duration-300 ease-out;
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500;
+    @apply hover:border-slate-300 hover:bg-white/90;
+  }
+
+  .sidebar-modern {
+    @apply bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900;
+    @apply border-r border-slate-700/50 backdrop-blur-xl;
+  }
+
+  .nav-item-modern {
+    @apply relative flex items-center gap-3 px-4 py-3 mx-2 rounded-xl;
+    @apply transition-all duration-300 ease-out;
+    @apply text-slate-300 hover:text-white hover:bg-white/10;
+    @apply before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2;
+    @apply before:w-1 before:h-0 before:bg-blue-400 before:rounded-full;
+    @apply before:transition-all before:duration-300;
+  }
+
+  .nav-item-modern.active {
+    @apply text-white bg-gradient-to-r from-blue-500/20 to-indigo-500/20;
+    @apply border border-blue-500/30 shadow-lg shadow-blue-500/10;
+  }
+
+  .nav-item-modern.active::before {
+    @apply h-6;
+  }
+
+  .nav-item-modern:hover::before {
+    @apply h-4;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bounceSubtle {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-2px) scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-100 rounded-full;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 rounded-full hover:bg-slate-400;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-400;
+}
+
+/* Loading spinner */
+.spinner-icon {
+  animation: spin 1s linear infinite;
+  color: #3b82f6;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Overlay styles */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+/* Form enhancements */
+.form-group {
+  @apply space-y-2;
+}
+
+.form-label {
+  @apply block text-sm font-semibold text-slate-700;
+}
+
+.form-input {
+  @apply input-modern placeholder:text-slate-400;
+}
+
+.form-select {
+  @apply input-modern cursor-pointer;
+}
+
+.form-textarea {
+  @apply input-modern resize-none;
+}
+
+/* Status badges */
+.badge-success {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800;
+}
+
+.badge-warning {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800;
+}
+
+.badge-error {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-rose-100 text-rose-800;
+}
+
+.badge-info {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800;
+}
+
+/* Table enhancements */
+.table-modern {
+  @apply w-full border-collapse;
+}
+
+.table-modern th {
+  @apply px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider bg-slate-50/80;
+}
+
+.table-modern td {
+  @apply px-6 py-4 text-sm text-slate-900 border-t border-slate-200;
+}
+
+.table-modern tr {
+  @apply transition-colors duration-200 hover:bg-slate-50/50;
+}
+
+/* Modern shadows */
+.shadow-soft {
+  box-shadow: 0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04);
+}
+
+.shadow-medium {
+  box-shadow: 0 4px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.shadow-strong {
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.15), 0 2px 10px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive utilities */
+@media (max-width: 640px) {
+  .mobile-stack {
+    @apply flex-col space-y-4 space-x-0;
+  }
+  
+  .mobile-full {
+    @apply w-full;
+  }
+  
+  .mobile-hidden {
+    @apply hidden;
+  }
+}
+
+/* Focus styles */
+.focus-modern {
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2 focus:ring-offset-white;
+}
+
+/* Gradient backgrounds */
+.bg-gradient-modern {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.bg-gradient-warm {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.bg-gradient-cool {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.bg-gradient-sunset {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+/* Typography improvements */
+.heading-1 {
+  @apply text-4xl font-bold text-slate-900 leading-tight;
+}
+
+.heading-2 {
+  @apply text-3xl font-bold text-slate-900 leading-tight;
+}
+
+.heading-3 {
+  @apply text-2xl font-semibold text-slate-900 leading-tight;
+}
+
+.heading-4 {
+  @apply text-xl font-semibold text-slate-900 leading-tight;
+}
+
+.body-large {
+  @apply text-lg text-slate-700 leading-relaxed;
+}
+
+.body-medium {
+  @apply text-base text-slate-700 leading-relaxed;
+}
+
+.body-small {
+  @apply text-sm text-slate-600 leading-relaxed;
+}
+
+.caption {
+  @apply text-xs text-slate-500 leading-relaxed;
 }

@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Home } from 'lucide-react';
 
 interface BreadcrumbItem {
   label: string;
@@ -14,23 +13,32 @@ interface BreadcrumbProps {
 
 const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
   return (
-    <div className="flex items-center space-x-2 text-sm text-gray-600 mb-6">
+    <nav className="flex items-center space-x-2 text-sm mb-8 animate-fade-in">
+      <Link
+        to="/dashboard"
+        className="flex items-center gap-1 text-slate-500 hover:text-blue-600 transition-colors duration-200 hover:scale-105"
+      >
+        <Home className="w-4 h-4" />
+      </Link>
+      
       {items.map((item, index) => (
         <React.Fragment key={index}>
-          {index > 0 && <ChevronRight className="w-4 h-4" />}
+          <ChevronRight className="w-4 h-4 text-slate-400" />
           {item.path ? (
             <Link
               to={item.path}
-              className="hover:text-blue-600 transition-colors"
+              className="text-slate-500 hover:text-blue-600 transition-all duration-200 hover:scale-105 font-medium px-2 py-1 rounded-lg hover:bg-blue-50"
             >
               {item.label}
             </Link>
           ) : (
-            <span className="text-gray-800 font-medium">{item.label}</span>
+            <span className="text-slate-800 font-semibold px-2 py-1 rounded-lg bg-blue-50/50">
+              {item.label}
+            </span>
           )}
         </React.Fragment>
       ))}
-    </div>
+    </nav>
   );
 };
 

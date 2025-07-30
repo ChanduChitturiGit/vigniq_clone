@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
@@ -19,7 +18,9 @@ import {
   FileText,
   UserPlus,
   Upload,
-  Eye
+  Eye,
+  Sparkles,
+  Zap
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -58,7 +59,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed }) => {
 
   const getMenuItems = (): MenuItem[] => {
     const baseItems: MenuItem[] = [
-      { path: '/dashboard', icon: Home, label: 'Home', roles: ['superadmin', 'admin', 'teacher', 'student'] }
+      { path: '/dashboard', icon: Home, label: 'Dashboard', roles: ['superadmin', 'admin', 'teacher', 'student'] }
     ];
 
     const roleSpecificItems: { [key: string]: MenuItem[] } = {
@@ -66,23 +67,23 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed }) => {
         {
           key: 'school-management',
           icon: School,
-          label: 'School Management',
+          label: 'School Hub',
           roles: ['superadmin'],
           isDropdown: true,
           subItems: [
-            { path: '/schools', label: 'Schools', icon: School },
+            { path: '/schools', label: 'All Schools', icon: School },
             { path: '/create-school', label: 'Create School', icon: UserPlus }
           ]
         },
         {
           key: 'ebooks',
           icon: BookOpen,
-          label: 'E-Books',
+          label: 'Digital Library',
           roles: ['superadmin'],
           isDropdown: true,
           subItems: [
-            { path: '/upload-ebooks', label: 'Upload E-books', icon: Upload },
-            { path: '/view-ebooks', label: 'View E-books', icon: Eye }
+            { path: '/upload-ebooks', label: 'Upload Content', icon: Upload },
+            { path: '/view-ebooks', label: 'Browse Library', icon: Eye }
           ]
         }
       ],
@@ -90,37 +91,35 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed }) => {
         {
           key: 'school-management',
           icon: School,
-          label: 'School Management',
+          label: 'School Hub',
           roles: ['admin'],
           isDropdown: true,
           subItems: [
             { path: '/admin-school', label: 'My School', icon: School },
             { path: '/classes', label: 'Classes', icon: BookOpen },
-            { path: '/teachers', label: 'teachers', icon: GraduationCap },
-            { path: '/students', label: 'students', icon: Users }
+            { path: '/teachers', label: 'Teachers', icon: GraduationCap },
+            { path: '/students', label: 'Students', icon: Users }
           ]
         },
-        { path: '/view-ebooks', icon: BookOpen, label: 'E-Books', roles: ['admin'] }
+        { path: '/view-ebooks', icon: BookOpen, label: 'Digital Library', roles: ['admin'] }
       ],
       'teacher': [
         {
           key: 'school-management',
           icon: Users,
-          label: 'School Management',
+          label: 'My Classes',
           roles: ['teacher'],
           isDropdown: true,
           subItems: [
             { path: '/classes', label: 'Classes', icon: BookOpen },
-            { path: '/students', label: 'students', icon: Users }
+            { path: '/students', label: 'Students', icon: Users }
           ]
         },
-        { path: '/view-ebooks', icon: BookOpen, label: 'E-Books', roles: ['teacher'] }
+        { path: '/view-ebooks', icon: BookOpen, label: 'Digital Library', roles: ['teacher'] }
       ],
       'student': [
         { path: '/profile', icon: User, label: 'My Profile', roles: ['student'] },
-        // { path: '/timetable', icon: Calendar, label: 'Timetable', roles: ['student'] },
-        // { path: '/grades', icon: BarChart3, label: 'Grades', roles: ['student'] },
-        { path: '/view-ebooks', icon: BookOpen, label: 'E-Books', roles: ['student'] }
+        { path: '/view-ebooks', icon: BookOpen, label: 'Digital Library', roles: ['student'] }
       ]
     };
 
@@ -128,10 +127,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed }) => {
     const helpSubItems: { path: string; label: string; icon: React.ComponentType<{ className?: string }> }[] = [];
 
     if (user?.role === 'superadmin') {
-      // superadmin sees responses (from all admins)
       helpSubItems.push({ path: '/responses', label: 'Responses', icon: MessageSquare });
     } else {
-      // Other roles see support, requests, and responses
       helpSubItems.push({ path: '/support', label: 'Support', icon: HelpCircle });
       
       if (user?.role !== 'student') {
@@ -145,7 +142,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed }) => {
       {
         key: 'help',
         icon: HelpCircle,
-        label: 'Help',
+        label: 'Support Center',
         roles: ['superadmin', 'admin', 'teacher', 'student'],
         isDropdown: true,
         subItems: helpSubItems
@@ -181,24 +178,39 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed }) => {
   }, [location.pathname]);
 
   return (
-    <div className={`bg-gradient-to-b from-blue-400 to-blue-500 text-white h-screen transition-all duration-300 ${
-      isCollapsed ? 'w-16' : 'w-64'
-    } flex flex-col`}>
+    <div className={`sidebar-modern text-white h-screen transition-all duration-500 ease-out ${
+      isCollapsed ? 'w-20' : 'w-72'
+    } flex flex-col relative overflow-hidden`}>
+      
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-10 -right-10 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl animate-pulse-soft"></div>
+        <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-violet-500/10 rounded-full blur-3xl animate-pulse-soft" style={{ animationDelay: '1s' }}></div>
+      </div>
+
       {/* Logo Section */}
-      <div className="p-4 border-b border-blue-300">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-white rounded flex items-center justify-center">
-            <span className="text-blue-500 font-bold">V</span>
+      <div className="relative p-6 border-b border-slate-700/50">
+        <div className="flex items-center gap-4">
+          <div className="relative">
+            <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-violet-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/25 transition-all duration-300 hover:scale-110">
+              <Sparkles className="w-6 h-6 text-white" />
+            </div>
+            <div className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-400 rounded-full animate-pulse"></div>
           </div>
           {!isCollapsed && (
-            <span className="text-xl font-bold">VIGNIQ</span>
+            <div className="animate-fade-in">
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+                VIGNIQ
+              </h1>
+              <p className="text-xs text-slate-400 font-medium">AI-Powered Learning</p>
+            </div>
           )}
         </div>
       </div>
 
       {/* Navigation Menu */}
-      <nav className="flex-1 py-4">
-        <ul className="space-y-1">
+      <nav className="flex-1 py-6 px-3 relative">
+        <ul className="space-y-2">
           {getMenuItems().map((item) => {
             if (item.roles && item.roles.includes(user?.role || '')) {
               const Icon = item.icon;
@@ -208,41 +220,54 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed }) => {
                 const isDropdownHighlighted = isDropdownActive(item.subItems);
                 
                 return (
-                  <li key={item.key}>
+                  <li key={item.key} className="animate-slide-up" style={{ animationDelay: `${getMenuItems().indexOf(item) * 0.1}s` }}>
                     <button
                       onClick={() => toggleMenu(item.key)}
-                      className={`w-full flex items-center justify-between gap-3 px-4 py-3 mx-2 rounded-lg transition-colors ${
-                        isDropdownHighlighted 
-                          ? 'bg-white/20 text-white' 
-                          : 'text-white/80 hover:bg-white/10 hover:text-white'
+                      className={`nav-item-modern w-full ${
+                        isDropdownHighlighted ? 'active' : ''
                       }`}
                     >
-                      <div className="flex items-center gap-3">
-                        <Icon className="w-5 h-5 flex-shrink-0" />
+                      <div className="flex items-center gap-4 flex-1">
+                        <div className="relative">
+                          <Icon className="w-5 h-5 flex-shrink-0 transition-all duration-300" />
+                          {isDropdownHighlighted && (
+                            <div className="absolute -inset-1 bg-blue-400/20 rounded-lg blur animate-pulse"></div>
+                          )}
+                        </div>
                         {!isCollapsed && (
-                          <span className="truncate">{item.label}</span>
+                          <span className="font-medium truncate">{item.label}</span>
                         )}
                       </div>
                       {!isCollapsed && (
-                        isExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />
+                        <div className="transition-transform duration-300">
+                          {isExpanded ? 
+                            <ChevronDown className="w-4 h-4" /> : 
+                            <ChevronRight className="w-4 h-4" />
+                          }
+                        </div>
                       )}
                     </button>
                     {isExpanded && !isCollapsed && item.subItems && (
-                      <ul className="ml-8 mt-1 space-y-1">
+                      <ul className="ml-6 mt-2 space-y-1 animate-fade-in">
                         {item.subItems.map((subItem) => {
                           const SubIcon = subItem.icon;
                           return (
                             <li key={subItem.path}>
                               <Link
                                 to={subItem.path}
-                                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                                className={`flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-300 group ${
                                   isActive(subItem.path) 
-                                    ? 'bg-white/20 text-white font-medium' 
-                                    : 'text-white/70 hover:bg-white/10 hover:text-white'
+                                    ? 'bg-gradient-to-r from-blue-500/20 to-violet-500/20 text-white border border-blue-500/30' 
+                                    : 'text-slate-300 hover:text-white hover:bg-white/5'
                                 }`}
                               >
-                                {SubIcon && <SubIcon className="w-4 h-4" />}
-                                {subItem.label}
+                                {SubIcon && (
+                                  <SubIcon className="w-4 h-4 transition-all duration-300 group-hover:scale-110" />
+                                )}
+                                <span className="text-sm font-medium">{subItem.label}</span>
+                                {isActive(subItem.path) && (
+                                  <div className="ml-auto w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                                )}
                               </Link>
                             </li>
                           );
@@ -254,18 +279,24 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed }) => {
               } else {
                 const regularItem = item as RegularMenuItem;
                 return (
-                  <li key={regularItem.path}>
+                  <li key={regularItem.path} className="animate-slide-up" style={{ animationDelay: `${getMenuItems().indexOf(item) * 0.1}s` }}>
                     <Link
                       to={regularItem.path}
-                      className={`flex items-center gap-3 px-4 py-3 mx-2 rounded-lg transition-colors ${
-                        isActive(regularItem.path) 
-                          ? 'bg-white/20 text-white' 
-                          : 'text-white/80 hover:bg-white/10 hover:text-white'
+                      className={`nav-item-modern ${
+                        isActive(regularItem.path) ? 'active' : ''
                       }`}
                     >
-                      <Icon className="w-5 h-5 flex-shrink-0" />
+                      <div className="relative">
+                        <Icon className="w-5 h-5 flex-shrink-0 transition-all duration-300" />
+                        {isActive(regularItem.path) && (
+                          <div className="absolute -inset-1 bg-blue-400/20 rounded-lg blur animate-pulse"></div>
+                        )}
+                      </div>
                       {!isCollapsed && (
-                        <span className="truncate">{regularItem.label}</span>
+                        <span className="font-medium truncate">{regularItem.label}</span>
+                      )}
+                      {isActive(regularItem.path) && !isCollapsed && (
+                        <div className="ml-auto w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
                       )}
                     </Link>
                   </li>
@@ -276,6 +307,21 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed }) => {
           })}
         </ul>
       </nav>
+
+      {/* Footer */}
+      {!isCollapsed && (
+        <div className="p-6 border-t border-slate-700/50 animate-fade-in">
+          <div className="flex items-center gap-3 p-3 rounded-xl bg-gradient-to-r from-blue-500/10 to-violet-500/10 border border-blue-500/20">
+            <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-violet-600 rounded-lg flex items-center justify-center">
+              <Zap className="w-4 h-4 text-white" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-white truncate">AI Assistant</p>
+              <p className="text-xs text-slate-400">Ready to help</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
