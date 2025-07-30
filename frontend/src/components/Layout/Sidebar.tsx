@@ -181,24 +181,24 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed }) => {
   }, [location.pathname]);
 
   return (
-    <div className={`bg-gradient-to-b from-blue-400 to-blue-500 text-white h-screen transition-all duration-300 ${
+    <div className={`bg-white border-r border-slate-200 h-screen transition-all duration-300 ${
       isCollapsed ? 'w-16' : 'w-64'
-    } flex flex-col`}>
+    } flex flex-col shadow-sm`}>
       {/* Logo Section */}
-      <div className="p-4 border-b border-blue-300">
+      <div className="p-4 border-b border-slate-200">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-white rounded flex items-center justify-center">
-            <span className="text-blue-500 font-bold">V</span>
+          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center shadow-sm">
+            <span className="text-white font-bold text-sm">V</span>
           </div>
           {!isCollapsed && (
-            <span className="text-xl font-bold">VIGNIQ</span>
+            <span className="text-xl font-bold text-slate-800">VIGNIQ</span>
           )}
         </div>
       </div>
 
       {/* Navigation Menu */}
       <nav className="flex-1 py-4">
-        <ul className="space-y-1">
+        <ul className="space-y-1 px-2">
           {getMenuItems().map((item) => {
             if (item.roles && item.roles.includes(user?.role || '')) {
               const Icon = item.icon;
@@ -211,20 +211,22 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed }) => {
                   <li key={item.key}>
                     <button
                       onClick={() => toggleMenu(item.key)}
-                      className={`w-full flex items-center justify-between gap-3 px-4 py-3 mx-2 rounded-lg transition-colors ${
+                      className={`w-full flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 ${
                         isDropdownHighlighted 
-                          ? 'bg-white/20 text-white' 
-                          : 'text-white/80 hover:bg-white/10 hover:text-white'
+                          ? 'bg-blue-50 text-blue-700 shadow-sm' 
+                          : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                       }`}
                     >
                       <div className="flex items-center gap-3">
                         <Icon className="w-5 h-5 flex-shrink-0" />
                         {!isCollapsed && (
-                          <span className="truncate">{item.label}</span>
+                          <span className="truncate font-medium">{item.label}</span>
                         )}
                       </div>
                       {!isCollapsed && (
-                        isExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />
+                        <div className={`transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}>
+                          <ChevronDown className="w-4 h-4" />
+                        </div>
                       )}
                     </button>
                     {isExpanded && !isCollapsed && item.subItems && (
@@ -235,14 +237,14 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed }) => {
                             <li key={subItem.path}>
                               <Link
                                 to={subItem.path}
-                                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                                className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                                   isActive(subItem.path) 
-                                    ? 'bg-white/20 text-white font-medium' 
-                                    : 'text-white/70 hover:bg-white/10 hover:text-white'
+                                    ? 'bg-blue-500 text-white shadow-md font-medium' 
+                                    : 'text-slate-500 hover:bg-slate-50 hover:text-slate-700'
                                 }`}
                               >
                                 {SubIcon && <SubIcon className="w-4 h-4" />}
-                                {subItem.label}
+                                <span className="text-sm">{subItem.label}</span>
                               </Link>
                             </li>
                           );
@@ -257,15 +259,15 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed }) => {
                   <li key={regularItem.path}>
                     <Link
                       to={regularItem.path}
-                      className={`flex items-center gap-3 px-4 py-3 mx-2 rounded-lg transition-colors ${
+                      className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 ${
                         isActive(regularItem.path) 
-                          ? 'bg-white/20 text-white' 
-                          : 'text-white/80 hover:bg-white/10 hover:text-white'
+                          ? 'bg-blue-500 text-white shadow-md' 
+                          : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                       }`}
                     >
                       <Icon className="w-5 h-5 flex-shrink-0" />
                       {!isCollapsed && (
-                        <span className="truncate">{regularItem.label}</span>
+                        <span className="truncate font-medium">{regularItem.label}</span>
                       )}
                     </Link>
                   </li>
