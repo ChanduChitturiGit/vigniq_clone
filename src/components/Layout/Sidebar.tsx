@@ -180,40 +180,32 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed }) => {
   }, [location.pathname]);
 
   return (
-    <div className={`sidebar-modern text-white h-screen transition-all duration-500 ease-out ${
-      isCollapsed ? 'w-20' : 'w-80'
-    } flex flex-col relative overflow-hidden`}>
-      
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-10 -right-10 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl animate-pulse-soft"></div>
-        <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-violet-500/10 rounded-full blur-3xl animate-pulse-soft" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute top-1/2 -right-5 w-24 h-24 bg-emerald-500/10 rounded-full blur-3xl animate-pulse-soft" style={{ animationDelay: '2s' }}></div>
-      </div>
+    <div className={`bg-white border-r border-blue-100 h-screen transition-all duration-300 ease-out ${
+      isCollapsed ? 'w-16 md:w-20' : 'w-64 md:w-72 lg:w-80'
+    } flex flex-col relative shadow-sm`}>
 
       {/* Logo Section */}
-      <div className="relative p-8 border-b border-slate-700/50">
+      <div className="relative p-4 md:p-6 border-b border-blue-100">
         <div className="flex items-center gap-4">
           <div className="relative">
-            <div className="w-14 h-14 bg-gradient-to-br from-blue-400 via-violet-500 to-purple-600 rounded-3xl flex items-center justify-center shadow-xl shadow-blue-500/30 transition-all duration-300 hover:scale-110 hover:rotate-3">
-              <Brain className="w-7 h-7 text-white" />
+            <div className={`${isCollapsed ? 'w-8 h-8' : 'w-10 h-10 md:w-12 md:h-12'} bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-md transition-all duration-300 hover:scale-105`}>
+              <Brain className={`${isCollapsed ? 'w-4 h-4' : 'w-5 h-5 md:w-6 md:h-6'} text-white`} />
             </div>
-            <div className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full animate-pulse shadow-lg"></div>
           </div>
           {!isCollapsed && (
             <div className="animate-fade-in">
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-white via-blue-200 to-violet-200 bg-clip-text text-transparent">
+              <h1 className="text-lg md:text-xl lg:text-2xl font-bold text-blue-700">
                 VIGNIQ
               </h1>
-              <p className="text-xs text-slate-400 font-medium tracking-wide">AI-Powered Learning Platform</p>
+              <p className="text-xs text-blue-500 font-medium">AI Learning Platform</p>
             </div>
           )}
         </div>
       </div>
 
       {/* Navigation Menu */}
-      <nav className="flex-1 py-8 px-4 relative">
-        <ul className="space-y-3">
+      <nav className="flex-1 py-4 md:py-6 px-2 md:px-4 relative overflow-y-auto">
+        <ul className="space-y-1 md:space-y-2">
           {getMenuItems().map((item, index) => {
             if (item.roles && item.roles.includes(user?.role || '')) {
               const Icon = item.icon;
@@ -226,50 +218,49 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed }) => {
                   <li key={item.key} className="animate-slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
                     <button
                       onClick={() => toggleMenu(item.key)}
-                      className={`nav-item-modern w-full group ${
-                        isDropdownHighlighted ? 'active' : ''
+                      className={`w-full flex items-center gap-3 px-3 py-2 md:py-3 rounded-lg transition-all duration-200 group text-left ${
+                        isDropdownHighlighted 
+                          ? 'bg-blue-50 text-blue-700 border border-blue-200' 
+                          : 'text-slate-600 hover:bg-blue-50 hover:text-blue-600'
                       }`}
                     >
                       <div className="flex items-center gap-4 flex-1">
                         <div className="relative">
-                          <Icon className="w-6 h-6 flex-shrink-0 transition-all duration-300 group-hover:scale-110" />
-                          {isDropdownHighlighted && (
-                            <div className="absolute -inset-2 bg-blue-400/20 rounded-xl blur animate-pulse"></div>
-                          )}
+                          <Icon className={`${isCollapsed ? 'w-4 h-4' : 'w-4 h-4 md:w-5 md:h-5'} flex-shrink-0 transition-colors duration-200`} />
                         </div>
                         {!isCollapsed && (
-                          <span className="font-semibold truncate text-base">{item.label}</span>
+                          <span className="font-medium truncate text-sm md:text-base">{item.label}</span>
                         )}
                       </div>
                       {!isCollapsed && (
                         <div className="transition-transform duration-300">
                           {isExpanded ? 
-                            <ChevronDown className="w-5 h-5" /> : 
-                            <ChevronRight className="w-5 h-5" />
+                            <ChevronDown className="w-4 h-4" /> : 
+                            <ChevronRight className="w-4 h-4" />
                           }
                         </div>
                       )}
                     </button>
                     {isExpanded && !isCollapsed && item.subItems && (
-                      <ul className="ml-8 mt-3 space-y-2 animate-fade-in">
+                      <ul className="ml-6 md:ml-8 mt-2 space-y-1 animate-fade-in">
                         {item.subItems.map((subItem, subIndex) => {
                           const SubIcon = subItem.icon;
                           return (
                             <li key={subItem.path} className="animate-slide-right" style={{ animationDelay: `${subIndex * 0.05}s` }}>
                               <Link
                                 to={subItem.path}
-                                className={`flex items-center gap-4 px-6 py-3 rounded-2xl transition-all duration-300 group ${
+                                className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-all duration-200 group ${
                                   isActive(subItem.path) 
-                                    ? 'bg-gradient-to-r from-blue-500/30 to-violet-500/30 text-white border border-blue-500/40 shadow-lg shadow-blue-500/20' 
-                                    : 'text-slate-300 hover:text-white hover:bg-white/10 hover:translate-x-1'
+                                    ? 'bg-blue-100 text-blue-700 border border-blue-200' 
+                                    : 'text-slate-500 hover:text-blue-600 hover:bg-blue-50'
                                 }`}
                               >
                                 {SubIcon && (
-                                  <SubIcon className="w-5 h-5 transition-all duration-300 group-hover:scale-110" />
+                                  <SubIcon className="w-4 h-4 transition-colors duration-200" />
                                 )}
-                                <span className="text-sm font-medium">{subItem.label}</span>
+                                <span className="text-xs md:text-sm font-medium">{subItem.label}</span>
                                 {isActive(subItem.path) && (
-                                  <div className="ml-auto w-2 h-2 bg-blue-400 rounded-full animate-pulse shadow-lg shadow-blue-400/50"></div>
+                                  <div className="ml-auto w-2 h-2 bg-blue-500 rounded-full"></div>
                                 )}
                               </Link>
                             </li>
@@ -285,21 +276,20 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed }) => {
                   <li key={regularItem.path} className="animate-slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
                     <Link
                       to={regularItem.path}
-                      className={`nav-item-modern group ${
-                        isActive(regularItem.path) ? 'active' : ''
+                      className={`flex items-center gap-3 px-3 py-2 md:py-3 rounded-lg transition-all duration-200 group ${
+                        isActive(regularItem.path) 
+                          ? 'bg-blue-50 text-blue-700 border border-blue-200' 
+                          : 'text-slate-600 hover:bg-blue-50 hover:text-blue-600'
                       }`}
                     >
                       <div className="relative">
-                        <Icon className="w-6 h-6 flex-shrink-0 transition-all duration-300 group-hover:scale-110" />
-                        {isActive(regularItem.path) && (
-                          <div className="absolute -inset-2 bg-blue-400/20 rounded-xl blur animate-pulse"></div>
-                        )}
+                        <Icon className={`${isCollapsed ? 'w-4 h-4' : 'w-4 h-4 md:w-5 md:h-5'} flex-shrink-0 transition-colors duration-200`} />
                       </div>
                       {!isCollapsed && (
-                        <span className="font-semibold truncate text-base">{regularItem.label}</span>
+                        <span className="font-medium truncate text-sm md:text-base">{regularItem.label}</span>
                       )}
                       {isActive(regularItem.path) && !isCollapsed && (
-                        <div className="ml-auto w-2 h-2 bg-blue-400 rounded-full animate-pulse shadow-lg shadow-blue-400/50"></div>
+                        <div className="ml-auto w-2 h-2 bg-blue-500 rounded-full"></div>
                       )}
                     </Link>
                   </li>
@@ -313,16 +303,16 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed }) => {
 
       {/* Footer */}
       {!isCollapsed && (
-        <div className="p-6 border-t border-slate-700/50 animate-fade-in">
-          <div className="flex items-center gap-4 p-4 rounded-2xl bg-gradient-to-r from-blue-500/20 to-violet-500/20 border border-blue-500/30 backdrop-blur-sm">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-violet-600 rounded-xl flex items-center justify-center shadow-lg">
-              <Zap className="w-5 h-5 text-white" />
+        <div className="p-4 md:p-6 border-t border-blue-100 animate-fade-in">
+          <div className="flex items-center gap-3 p-3 md:p-4 rounded-lg bg-blue-50 border border-blue-200">
+            <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-500 rounded-lg flex items-center justify-center">
+              <Zap className="w-4 h-4 md:w-5 md:h-5 text-white" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-white truncate">AI Assistant</p>
-              <p className="text-xs text-slate-300">Ready to help you learn</p>
+              <p className="text-sm font-semibold text-blue-700 truncate">AI Assistant</p>
+              <p className="text-xs text-blue-500">Ready to help you learn</p>
             </div>
-            <div className="w-3 h-3 bg-emerald-400 rounded-full animate-pulse shadow-lg shadow-emerald-400/50"></div>
+            <div className="w-2 h-2 md:w-3 md:h-3 bg-emerald-400 rounded-full animate-pulse"></div>
           </div>
         </div>
       )}

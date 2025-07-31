@@ -253,30 +253,29 @@
   }
 
   .sidebar-modern {
-    @apply bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900;
-    @apply border-r border-slate-700/50 backdrop-blur-xl;
+    @apply bg-white border-r border-blue-100;
   }
 
   .nav-item-modern {
-    @apply relative flex items-center gap-4 px-6 py-4 mx-3 rounded-2xl;
+    @apply relative flex items-center gap-3 px-3 py-2 md:py-3 mx-2 rounded-lg;
     @apply transition-all duration-300 ease-out;
-    @apply text-slate-300 hover:text-white hover:bg-white/10;
+    @apply text-slate-600 hover:text-blue-600 hover:bg-blue-50;
     @apply before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2;
-    @apply before:w-1 before:h-0 before:bg-blue-400 before:rounded-full;
+    @apply before:w-1 before:h-0 before:bg-blue-500 before:rounded-full;
     @apply before:transition-all before:duration-300;
   }
 
   .nav-item-modern.active {
-    @apply text-white bg-gradient-to-r from-blue-500/20 to-indigo-500/20;
-    @apply border border-blue-500/30 shadow-lg shadow-blue-500/10;
+    @apply text-blue-700 bg-blue-50;
+    @apply border border-blue-200;
   }
 
   .nav-item-modern.active::before {
-    @apply h-8;
+    @apply h-6;
   }
 
   .nav-item-modern:hover::before {
-    @apply h-6;
+    @apply h-4;
   }
 
   .stats-card {
@@ -470,21 +469,21 @@
   }
 
   .sidebar-brand {
-    @apply flex items-center gap-4 p-6 border-b border-slate-700/50;
+    @apply flex items-center gap-4 p-4 md:p-6 border-b border-blue-100;
   }
 
   .sidebar-brand-icon {
-    @apply w-12 h-12 bg-gradient-to-br from-blue-400 to-violet-600 rounded-2xl;
-    @apply flex items-center justify-center shadow-lg shadow-blue-500/25;
-    @apply transition-all duration-300 hover:scale-110;
+    @apply w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl;
+    @apply flex items-center justify-center shadow-md;
+    @apply transition-all duration-300 hover:scale-105;
   }
 
   .sidebar-brand-text {
-    @apply text-2xl font-bold bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent;
+    @apply text-lg md:text-xl lg:text-2xl font-bold text-blue-700;
   }
 
   .sidebar-brand-subtitle {
-    @apply text-xs text-slate-400 font-medium;
+    @apply text-xs text-blue-500 font-medium;
   }
 
   .topbar-modern {

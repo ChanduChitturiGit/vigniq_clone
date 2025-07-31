@@ -13,16 +13,16 @@ interface BreadcrumbProps {
 
 const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
   return (
-    <nav className="breadcrumb-modern">
-      <div className="flex items-center space-x-3 p-4 card-modern bg-white/60 backdrop-blur-sm">
+    <nav className="mb-4 md:mb-6">
+      <div className="flex items-center space-x-2 md:space-x-3 p-3 md:p-4 bg-white rounded-lg border border-blue-100 shadow-sm">
         <Link
           to="/dashboard"
-          className="flex items-center gap-2 text-slate-500 hover:text-blue-600 transition-all duration-200 hover:scale-105 p-2 rounded-xl hover:bg-blue-50 group"
+          className="flex items-center gap-2 text-slate-500 hover:text-blue-600 transition-all duration-200 p-2 rounded-lg hover:bg-blue-50 group"
         >
-          <div className="p-1 rounded-lg bg-blue-100 text-blue-600 group-hover:bg-blue-200 transition-colors duration-200">
+          <div className="p-1 rounded bg-blue-100 text-blue-600 group-hover:bg-blue-200 transition-colors duration-200">
             <Home className="w-4 h-4" />
           </div>
-          <span className="font-medium hidden sm:inline">Home</span>
+          <span className="font-medium text-sm hidden sm:inline">Home</span>
         </Link>
         
         {items.map((item, index) => (
@@ -31,13 +31,12 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
             {item.path ? (
               <Link
                 to={item.path}
-                className="breadcrumb-item group flex items-center gap-2"
+                className="flex items-center gap-2 text-slate-500 hover:text-blue-600 transition-colors duration-200 font-medium px-2 py-1 rounded hover:bg-blue-50 text-sm"
               >
-                <Sparkles className="w-3 h-3 text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                 <span>{item.label}</span>
               </Link>
             ) : (
-              <span className="breadcrumb-current flex items-center gap-2">
+              <span className="flex items-center gap-2 text-slate-800 font-semibold px-2 py-1 rounded bg-blue-50 text-sm">
                 <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
                 <span>{item.label}</span>
               </span>
